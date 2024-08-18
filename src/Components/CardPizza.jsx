@@ -4,26 +4,31 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPizzaSlice} from '@fortawesome/free-solid-svg-icons'
 
 
-const CardPizza = (props) => {
+const CardPizza = ({pizzas}) => {
   return (
     <div className="card">
-      <img src={props.img} className="card-img-top" alt="..." />
+      <img src={pizzas.img} className="card-img-top w-25" alt="..." />
       <div className="card-body">
-        <h4 className="card-title">{props.titulo}</h4>
+        <h4 className="card-title">{pizzas.name}</h4>
       </div>
       <ul className="list-group list-group-flush">
         <li className="list-group-item">
           <div>
+            <h6>{pizzas.desc}</h6>
             <h6 className="text-center">Ingredientes:</h6>
-            <div className="d-flex justify-content-center gap-2">
+            <div className="d-flex justify-content-around gap-2">
               <FontAwesomeIcon icon={faPizzaSlice} />
-              <p className="text-dark">{props.ingredientes.join(", ")}</p>
+              <ul>
+                {pizzas.ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                ))}
+              </ul>
               </div>
           </div>
         </li>
         <li className="list-group-item">
           <div>
-            <h4>Precio: $ {props.precio}</h4>
+            <h4>Precio: $ {pizzas.price}</h4>
             <div className="d-flex justify-content-evenly">
             <button className="btn btn-light border-black  ">Ver más</button>
             <button className="btn btn-dark ">Añadir</button>
