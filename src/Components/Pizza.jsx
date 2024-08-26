@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from 'react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faPizzaSlice} from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPizzaSlice } from "@fortawesome/free-solid-svg-icons";
 
 const Pizza = () => {
-    const [pizza, setPizza] = useState({});
-    const obtenerPizza = async () => {
-        const response = await fetch("http://localhost:5000/api/pizzas/p001")
-        const pizza = await response.json();
-        setPizza(pizza)
-    }
-
-    useEffect(() => {
-        obtenerPizza();
-    }, [])
+  const [pizza, setPizza] = useState({});
+  const obtenerPizza = async () => {
+    const response = await fetch("http://localhost:5000/api/pizzas/p001");
+    const pizza = await response.json();
+    setPizza(pizza);
+  };
+  useEffect(() => {
+    obtenerPizza();
+  }, []);
 
   return (
     <div className="card w-50 m-auto">
@@ -28,27 +27,29 @@ const Pizza = () => {
             <div className="d-flex justify-content-around gap-2">
               <FontAwesomeIcon icon={faPizzaSlice} />
               <ul>
-                {pizza.ingredients.map((ingredient, index) => (
-                  <li key={index}>{ingredient}</li>
-                ))}
+                {pizza.ingredients ? (
+                  pizza.ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))
+                ) : (
+                  <li>No hay ingredientes disponibles</li>
+                )}
               </ul>
-              </div>
+            </div>
           </div>
         </li>
         <li className="list-group-item">
           <div>
             <h4>Precio: $ {pizza.price}</h4>
             <div className="d-flex justify-content-evenly">
-            <button className="btn btn-light border-black  ">Ver más</button>
-            <button className="btn btn-dark ">Añadir</button>
+              <button className="btn btn-light border-black  ">Ver más</button>
+              <button className="btn btn-dark ">Añadir</button>
             </div>
-            
-
           </div>
         </li>
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Pizza
+export default Pizza;
