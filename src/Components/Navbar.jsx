@@ -1,7 +1,7 @@
 import React from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLockOpen, faLock, faCartShopping} from '@fortawesome/free-solid-svg-icons'
-
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const total = 25000;
@@ -9,9 +9,8 @@ const Navbar = () => {
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
-          Pizzería Mamma Mia
-        </a>
+        <Link to="/" className="navbar-brand">Pizzeriía Mamma Mia</Link>
+        
         <button
           className="navbar-toggler"
           type="button"
@@ -27,40 +26,35 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto gap-4">
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Home
-              </a>
+            <Link to="/" className="nav-link">Home</Link>
+
             </li>
 
             {token ? (<> <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLock} />
-              <a className="nav-link" href="#">
-                Login
-              </a>
+              <Link to="/login" className="nav-link">Login</Link>
+
             </div>
              
             </li>
             <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLock} />
-              <a className="nav-link" href="#">
-                Register
-              </a>
+              <Link to="/register" className="nav-link">Register</Link>
+
             </div>
              
             </li>
             </>) : (<> <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLockOpen} />
-              <a className="nav-link" href="#">
-                Profile
-              </a>
+              <Link to="/profile" className="nav-link">Profile</Link>
+
             </div>
              
             </li>
             <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLockOpen} />
-              <a className="nav-link" href="#">
-                Logout
-              </a>
+              <Link to="/" className="nav-link">Logout</Link>
+
             </div>
              
             </li>
@@ -70,11 +64,13 @@ const Navbar = () => {
             
           </ul>
           <form className="ms-auto" role="search">
-
-              <button className="btn btn-outline-success ms-auto" type="submit">
+            <Link to="/cart">
+            <button className="btn btn-outline-success ms-auto" type="submit">
               <FontAwesomeIcon icon={faCartShopping} className="me-2" />
                 Total: ${total.toLocaleString()}
               </button>
+            </Link>
+            
             </form>
         </div>
       </nav>

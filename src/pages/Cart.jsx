@@ -1,8 +1,21 @@
 import React from "react";
-import cartPizza from "./pizzas.js";
-import { useState } from "react";
+//import cartPizza from "./pizzas.js";
+import { useState, useEffect } from "react";
 
 const Cart = () => {
+  const [pizzas, setPizzas] = useState([]); 
+
+  const obtenerPizzas = async () => {
+    let response = await fetch("http://localhost:5000/api/pizzas")
+    let pizzas = await response.json();
+    setPizzas(pizzas)
+    } 
+    
+    useEffect(() => {
+      obtenerPizzas();
+    }, []);
+    
+
   const [carrito, setCarrito] = useState([]);
   const aumentarCantidad = (pizza) => {
     let nuevaPizza = {
@@ -56,7 +69,7 @@ const precioTotal = () => {
     <div>
       <h1>Carrito de compras</h1>
       <div className="container d-flex flex-wrap justify-content-around">
-      {cartPizza.map((pizza, index) => (
+      {pizzas.map((pizza, index) => (
         <div key={index} className="col-4" >
           <div className="card m-3">
             <img src={pizza.img} className="card-img-top w-25" alt="..." />
