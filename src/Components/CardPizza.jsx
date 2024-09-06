@@ -2,9 +2,12 @@ import React from "react";
 import "../assets/css/cardPizza.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPizzaSlice} from '@fortawesome/free-solid-svg-icons'
-
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const CardPizza = ({pizzas}) => {
+  const {addItem } = useContext(CartContext);
+
   return (
     <div className="card">
       <img src={pizzas.img} className="card-img-top w-25" alt="..." />
@@ -31,7 +34,7 @@ const CardPizza = ({pizzas}) => {
             <h4>Precio: $ {pizzas.price}</h4>
             <div className="d-flex justify-content-evenly">
             <button className="btn btn-light border-black  ">Ver más</button>
-            <button className="btn btn-dark ">Añadir</button>
+            <button className="btn btn-dark" onClick={()=> addItem(pizzas )}>Añadir</button>
             </div>
             
 

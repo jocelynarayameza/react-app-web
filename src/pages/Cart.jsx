@@ -1,75 +1,24 @@
 import React from "react";
 //import cartPizza from "./pizzas.js";
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const Cart = () => {
-  const [pizzas, setPizzas] = useState([]); 
 
-  const obtenerPizzas = async () => {
-    let response = await fetch("http://localhost:5000/api/pizzas")
-    let pizzas = await response.json();
-    setPizzas(pizzas)
-    } 
-    
-    useEffect(() => {
-      obtenerPizzas();
-    }, []);
-    
+  const { cart, clearCart, total, increaseQuantity, decreaseQuantity, totalQuantity } = useContext(CartContext);
 
-  const [carrito, setCarrito] = useState([]);
-  const aumentarCantidad = (pizza) => {
-    let nuevaPizza = {
-      id: pizza.id,
-      name: pizza.name,
-      price: pizza.price,
-      cantidad: 1,
-    };
-    let encontrarPizza = carrito.find((item) => item.id === pizza.id);
-
-    if (encontrarPizza) {
-      setCarrito(
-        carrito.map((item) =>
-          item.id === encontrarPizza.id
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
-        )
-      );
-    } else {
-      setCarrito([...carrito, nuevaPizza]);
-    }
-  };
-
-  const disminuirCantidad = (pizza) => {
-    let encontrarPizza = carrito.findIndex((item) => item.id === pizza.id);
-    let nuevoCarrito = [...carrito];
-    if (encontrarPizza >= 0) {
-      if (nuevoCarrito[encontrarPizza].cantidad > 1) {
-        nuevoCarrito[encontrarPizza].cantidad--;
-      } else {
-        nuevoCarrito.splice(encontrarPizza, 1);
-      }
-      setCarrito(nuevoCarrito);
-    }
-  };
 
   const cantidadProducto = (pizza) => {
-    const obtProd = carrito.find((item) => item.id === pizza.id);
+    const obtProd = cart.find((item) => item.id === pizza.id);
     return obtProd ? obtProd.cantidad : 0;
   };
 
-const totalProductos = () => {
-    return carrito.reduce((acc, pizza) => acc += pizza.cantidad, 0)
-}
-
-const precioTotal = () => {
-    return carrito.reduce((acc, pizza) => acc += (pizza.cantidad * pizza.price), 0)
-}
 
   return (
     <div>
       <h1>Carrito de compras</h1>
       <div className="container d-flex flex-wrap justify-content-around">
-      {pizzas.map((pizza, index) => (
+      {cart.map((pizza, index) => (
         <div key={index} className="col-4" >
           <div className="card m-3">
             <img src={pizza.img} className="card-img-top w-25" alt="..." />
@@ -80,13 +29,13 @@ const precioTotal = () => {
             <div>
               <button
                 className="btn btn-success m-3"
-                onClick={() => aumentarCantidad(pizza)}
+                onClick={() => increaseQuantity(pizza)}
               >
                 +
               </button>
               <button
                 className="btn btn-danger m-3"
-                onClick={() => disminuirCantidad(pizza)}
+                onClick={() => decreaseQuantity(pizza)}
               >
                 -
               </button>
@@ -96,10 +45,10 @@ const precioTotal = () => {
         </div>
       ))}
       </div>
-      
+      <button className="btn btn-danger" onClick={()=>clearCart()}>Limpiar carrito</button>
 
-      <h2>Cantidad total de productos: {totalProductos()} </h2>
-      <h3>Total a pagar: {precioTotal()}</h3>
+      <h2>Cantidad total de productos: {totalQuantity} </h2>
+      <h3>Total a pagar: {total}</h3>
     </div>
   );
 };

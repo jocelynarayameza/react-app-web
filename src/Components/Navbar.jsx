@@ -2,9 +2,11 @@ import React from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLockOpen, faLock, faCartShopping} from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const Navbar = () => {
-  const total = 25000;
+  const {total} = useContext(CartContext)
   const token = false;
   return (
     <div className="container">
