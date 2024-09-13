@@ -2,11 +2,12 @@ import React from "react";
 //import cartPizza from "./pizzas.js";
 import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
 
   const { cart, clearCart, total, increaseQuantity, decreaseQuantity, totalQuantity } = useContext(CartContext);
-
+const {user} = useContext(UserContext);
 
   const cantidadProducto = (pizza) => {
     const obtProd = cart.find((item) => item.id === pizza.id);
@@ -49,6 +50,7 @@ const Cart = () => {
 
       <h2>Cantidad total de productos: {totalQuantity} </h2>
       <h3>Total a pagar: {total}</h3>
+      <button className= {user == true ? "btn btn-warning" : "disabled"}  >Ir a Pagar</button>
     </div>
   );
 };

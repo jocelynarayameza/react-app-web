@@ -4,9 +4,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPizzaSlice} from '@fortawesome/free-solid-svg-icons'
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const CardPizza = ({pizzas}) => {
   const {addItem } = useContext(CartContext);
+  const navigate = useNavigate();
+const verPizza = (id) => {
+navigate(`/pizza/${id}`);
+};
 
   return (
     <div className="card">
@@ -33,7 +38,7 @@ const CardPizza = ({pizzas}) => {
           <div>
             <h4>Precio: $ {pizzas.price}</h4>
             <div className="d-flex justify-content-evenly">
-            <button className="btn btn-light border-black  ">Ver más</button>
+            <button className="btn btn-light border-black" onClick={()=> verPizza(pizzas.id)}>Ver más</button>
             <button className="btn btn-dark" onClick={()=> addItem(pizzas )}>Añadir</button>
             </div>
             

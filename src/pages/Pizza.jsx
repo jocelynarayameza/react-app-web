@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPizzaSlice } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 
 const Pizza = () => {
+  const { id } = useParams();
+
   const [pizza, setPizza] = useState({});
   const obtenerPizza = async () => {
-    const response = await fetch("http://localhost:5000/api/pizzas/p001");
+    const response = await fetch(`http://localhost:5000/api/pizzas/${id}`);
     const pizza = await response.json();
     setPizza(pizza);
   };

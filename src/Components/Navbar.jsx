@@ -1,17 +1,19 @@
 import React from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLockOpen, faLock, faCartShopping} from '@fortawesome/free-solid-svg-icons'
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
+  const {user, logout } = useContext(UserContext)
   const {total} = useContext(CartContext)
-  const token = false;
+
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link to="/" className="navbar-brand">Pizzeriía Mamma Mia</Link>
+        <NavLink className="navbar-brand"   to="/"  >Pizzeriía Mamma Mia</NavLink>
         
         <button
           className="navbar-toggler"
@@ -28,34 +30,35 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto gap-4">
             <li className="nav-item">
-            <Link to="/" className="nav-link">Home</Link>
+            <NavLink to="/" className={ ({ isActive }) => (isActive ? "text-success nav-link " : "nav-link ") }>Home</NavLink>
 
             </li>
 
-            {token ? (<> <li className="nav-item"><div className="d-flex align-items-center">
+            {!user ? (<> <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLock} />
-              <Link to="/login" className="nav-link">Login</Link>
+              <NavLink to="/login" className="nav-link">Login</NavLink>
 
             </div>
              
             </li>
             <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLock} />
-              <Link to="/register" className="nav-link">Register</Link>
+              <NavLink to="/register" className="nav-link">Register</NavLink>
 
             </div>
              
             </li>
             </>) : (<> <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLockOpen} />
-              <Link to="/profile" className="nav-link">Profile</Link>
+              <NavLink to={user == true ?  "/profile" : "/login" }  className={({ isActive }) => (isActive ? "text-success nav-link" : "nav-link")} 
+              >Profile</NavLink>
 
             </div>
              
             </li>
             <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLockOpen} />
-              <Link to="/" className="nav-link">Logout</Link>
+              <NavLink to="/" className="nav-link" onClick={logout}>Logout</NavLink>
 
             </div>
              
