@@ -1,34 +1,14 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-
-  const validarDatos = (e) => {
-    e.preventDefault();
-    if (email === "" || password === "") {
-      setError("Todos los campos son obligatorios");
-      return;
-    }
-    if (password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres");
-      return;
-    }
-
-    setError(false);
-    setEmail("");
-    setPassword("");
-
-    alert("Formulario enviado ")
-  };
+  const {email, setEmail, password, setPassword, handleSubmit} = useContext(UserContext)
 
   return (
     <div>
       <h1 className="text-center">Login</h1>
-      <form className="w-50 mx-auto my-4" onSubmit={validarDatos}>
-        {error ? <p className="text-dark">{error}</p> : null}
+      <form className="w-50 mx-auto my-4" onSubmit={handleSubmit}>
         <div className="form-group mb-3">
           <label htmlFor="inputEmail1">Email</label>
           <input

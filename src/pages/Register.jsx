@@ -1,14 +1,16 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Register = () => {
+  const { registerHandler } = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmarPassword, setConfirmarPassword] = useState("");
   const [error, setError] = useState(false);
 
-  const validarDatos = (e) => {
-    e.preventDefault();
+  const validarDatos = () => {
     if (email === "" || password === "" || confirmarPassword === "") {
       setError("Todos los campos son obligatorios");
       return;
@@ -17,25 +19,30 @@ const Register = () => {
     if (password !== confirmarPassword) {
       setError("Las contraseñas deben coincidir");
       return;
-    } 
+    }
 
     if (password.length < 6) {
-        setError("La contraseña debe tener al menos 6 caracteres");
-        return;
-      }
+      setError("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+    setError(false);
+    return true;
+  };
 
-
-      setError(false);
-      setEmail("");
-      setPassword("");
-      setConfirmarPassword("");
-    
+  const registrar = async (e) => {
+    e.preventDefault();
+    const validar = validarDatos();
+    if (!validar) return;
+    await registerHandler(email, password);
+    setEmail("");
+    setPassword("");
+    setConfirmarPassword("");
   };
 
   return (
     <div>
       <h1 className="text-center">Register</h1>
-      <form className="w-50 mx-auto my-4" onSubmit={validarDatos}>
+      <form className="w-50 mx-auto my-4" onSubmit={registrar}>
         {error ? <p className="text-dark">{error}</p> : null}
         <div className="form-group mb-3">
           <label htmlFor="inputEmail1">Email</label>

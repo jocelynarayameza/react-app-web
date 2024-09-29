@@ -7,7 +7,7 @@ import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
-  const {user, logout } = useContext(UserContext)
+  const {user, logout, state } = useContext(UserContext)
   const {total} = useContext(CartContext)
 
   return (
@@ -34,7 +34,7 @@ const Navbar = () => {
 
             </li>
 
-            {!user ? (<> <li className="nav-item"><div className="d-flex align-items-center">
+            {!state ? (<> <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLock} />
               <NavLink to="/login" className="nav-link">Login</NavLink>
 
@@ -50,7 +50,7 @@ const Navbar = () => {
             </li>
             </>) : (<> <li className="nav-item"><div className="d-flex align-items-center">
               <FontAwesomeIcon icon={faLockOpen} />
-              <NavLink to={user == true ?  "/profile" : "/login" }  className={({ isActive }) => (isActive ? "text-success nav-link" : "nav-link")} 
+              <NavLink to={state == true ?  "/profile" : "/login" }  className={({ isActive }) => (isActive ? "text-success nav-link" : "nav-link")} 
               >Profile</NavLink>
 
             </div>
